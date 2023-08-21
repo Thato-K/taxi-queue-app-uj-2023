@@ -9,15 +9,18 @@ const  db = await sqlite.open({
 await db.migrate();
 
 export async function joinQueue() {
-    // console.log('join queue')
+    const result = await db.all(`select * from passenger_queue_count`)
+    console.log('join queue')
 
 }
 
 export async function leaveQueue() {
+    console.log('leave queue')
     
 }
 
 export async function joinTaxiQueue() {
+    // const sql = await db.all(`select * from taxi_queue`)
    
 }
 
@@ -32,3 +35,41 @@ export async function taxiQueueLength() {
 export function taxiDepart() {
 
 }
+
+// taxiQueue: [],
+
+//     joinsCount: 0,
+//         joinQueue() {
+
+//     this.joinsCount++;
+// },
+// leaveQueue() {
+//     if (this.joinsCount > 0) {
+//         this.joinsCount--;
+//     }
+
+
+// },
+
+// taxiJoinsCount: 0,
+//     joinTaxiQueue() {
+//     this.taxiJoinsCount++;
+
+// },
+
+// taxiDepartCount: 0,
+//     taxiDepart() {
+//     if (this.joinsCount >= 12 > 0) {
+//         this.taxiDepartCount++;
+//     }
+// },
+
+// queueLength() {
+
+
+// },
+
+// taxiQueueLength() {
+
+// },
+// }

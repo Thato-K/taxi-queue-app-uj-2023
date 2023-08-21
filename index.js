@@ -12,8 +12,16 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 4015;
 
+const data ={
+    taxiQueue:[],
+    joinsCount: 0,
+    taxiJoinsCount: 0,
+    taxiDepartCount: 0
+}
+
 // passenger joins the queue
 app.post('/api/passenger/join', (req, res) => {
+    if(data[joinsCount] > 0)
     res.json({
         message : 'join queue'
     })
@@ -21,22 +29,31 @@ app.post('/api/passenger/join', (req, res) => {
 
 // passenger leaves the queue
 app.post('/api/passenger/leave', (req, res) => {
-    res.json({
-        message : 'leave queue'
-    })
+    if(data[joinsCount--]){
+        res.json({
+            message: 'leave queue'
+        }) 
+    }
+    
 });
 
 app.post('/api/taxi/join', (req, res) => {
-    res.json({
+    if(data[taxiJoinsCount--]){
+      res.json({
         message : 'leave queue'
-    })
+    })  
+    }
+    
 });
 
 // Note there needs to be at least 12 people in the queue for the taxi to depart
 app.post('/api/taxi/depart', (req, res) => {
-    res.json({
+    if (data[joinsCount] >= 12) {
+       res.json({
         message : 'taxi depart from queue'
-    })
+    }) 
+    }
+    
 });
 
 
@@ -44,14 +61,14 @@ app.post('/api/taxi/depart', (req, res) => {
 app.get('/api/passenger/queue', (req, res) => {
     //  return test the API call
     res.json({
-        queueCount : 7
+        queueCount : 12
     })
 });
 
 // return the number of taxis in the queue
 app.get('/api/taxi/queue', (req, res) => {
     res.json({
-        queueCount : 0
+        queueCount : 1
     })
 });
 
